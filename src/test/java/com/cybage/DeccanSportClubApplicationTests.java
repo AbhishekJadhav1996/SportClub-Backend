@@ -81,7 +81,7 @@ class DeccanSportClubApplicationTests {
 	        MockitoAnnotations.initMocks(this);
 	    }
 	
-	//for setup check
+	//for setup check codes
 	 @Test
 	  public void test() {
 	    List<String> mockList = mock(List.class);
