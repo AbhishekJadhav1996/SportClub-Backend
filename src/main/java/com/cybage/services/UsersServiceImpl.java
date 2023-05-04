@@ -27,8 +27,7 @@ import com.cybage.repository.UsersRepository;
 import com.cybage.util.EmailUtil;
 
 @Service
-public class 
- implements UsersService {
+public class implements UsersService {
 
 	@Autowired
 	UsersRepository usersRepository;
@@ -70,8 +69,8 @@ public class
 
 	@Override
 	public int addManager(Users user,int id) throws AddressException, MessagingException {
-//		emailUtil.sendEmail("mukeshkumars@cybage.com", "Manager Login Details" , ""
-//				+ "Hello "+user.getName()+","+"\n"+"Email is: "+user.getEmail()+" and password is "+user.getPassword());
+// 		emailUtil.sendEmail("mukeshkumars@cybage.com", "Manager Login Details" , ""
+// 				+ "Hello "+user.getName()+","+"\n"+"Email is: "+user.getEmail()+" and password is "+user.getPassword());
 		user.setRole(Roles.MANAGER);
 		user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
 		user.setAccountNonLocked(true);
