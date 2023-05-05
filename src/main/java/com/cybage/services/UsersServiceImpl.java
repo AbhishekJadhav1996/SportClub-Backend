@@ -27,7 +27,7 @@ import com.cybage.repository.UsersRepository;
 import com.cybage.util.EmailUtil;
 
 @Service
-public class 
+public class UsersServiceImpl
  implements UsersService {
 
 	@Autowired
