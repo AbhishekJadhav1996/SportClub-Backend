@@ -1,14 +1,15 @@
+/* groovylint-disable CompileStatic */
 pipeline {
     environment {
         DATE = new Date().format('yy.M')
         TAG = "${DATE}.${BUILD_NUMBER}"
     }
-    agent any
+    agent centos_node
     tools {
             maven 'Maven 3.6.3'
             jdk 'JDK 11'
     }
-   stages {
+    stages {
         /* stage('Docker Build') {
             steps {
                 script {
@@ -65,7 +66,7 @@ pipeline {
                bat 'docker rm sportsclub | true'
 
                 bat "docker run --name sportsclub -d -p 8082:8080 http://localhost:8082/artifactory/sportsclub-docker-local/:${TAG}"
-           }
+            }
        }*/
 
         stage('Upload_Artifact') {
