@@ -8,8 +8,8 @@ pipeline {
             maven 'Maven 3.6.3'
             jdk 'JDK 11'
     }
-  /*  stages {
-        stage('Docker Build') {
+   stages {
+        /* stage('Docker Build') {
             steps {
                 script {
                     docker.build("sportsclub-docker-local/sportsclub:${TAG}")
@@ -85,4 +85,5 @@ pipeline {
             }
         }
     }
+}
 
