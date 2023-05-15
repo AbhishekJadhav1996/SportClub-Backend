@@ -4,9 +4,11 @@ pipeline {
         DATE = new Date().format('yy.M')
         TAG = "${DATE}.${BUILD_NUMBER}"
     }
-    agent centos_node
+    agent {
+        label 'centos_node'
+    }
     tools {
-            maven 'Maven 3.6.3'
+            maven 'Maven'
             jdk 'JDK 11'
     }
 
