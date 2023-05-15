@@ -1,4 +1,4 @@
-/* groovylint-disable CompileStatic */
+/* groovylint-disable CompileStatic, DuplicateStringLiteral, LineLength, NestedBlockDepth, NglParseError */
 pipeline {
     environment {
         DATE = new Date().format('yy.M')
@@ -9,11 +9,53 @@ pipeline {
             maven 'Maven 3.6.3'
             jdk 'JDK 11'
     }
+
     stages {
-        /* stage('Docker Build') {
+        //  stage('Docker Build') {
+        //     steps {
+        //         script {
+        //             docker.build("sportsclub-docker-local/sportsclub:${TAG}")
+        //         }
+        //     }
+        // }
+
+        stage('validate') {
+            steps {
+                echo 'VALIDATE'
+                sh 'mvn clean validate'
+            }
+        }
+        stage('Compile') {
+            steps {
+                echo 'COMPILE'
+                sh 'mvn clean install'
+            }
+        }
+
+        stage('test') {
+            steps {
+                echo 'Test'
+                sh 'mvn clean test'
+            }
+        }
+
+        stage('Sonar Analysis') {
+            steps {
+                sh 'mvn clean install'
+                sh 'mvn sonar:sonar -Dsonar.token=cbf4cb8304fee53bde54f1d6a2273f35b5afe9fd'
+            }
+        }
+
+        stage('package') {
+            steps {
+                echo 'Pakage'
+                sh 'mvn clean package'
+            }
+        }
+        stage('Docker Build') {
             steps {
                 script {
-                    docker.build("sportsclub-docker-local/sportsclub:${TAG}")
+                    docker.build("abhi_docker/sportsclub:${TAG}")
                 }
             }
         }
@@ -21,70 +63,44 @@ pipeline {
         stage('Pushing Docker Image to Jfrog Artifactory') {
             steps {
                 script {
-                    /* groovylint-disable-next-line NestedBlockDepth *
-                    docker.withRegistry('http://localhost:8082/', 'Jfrog-jenkinsUserPassword') {
-                        docker.image("sportsclub-docker-local/sportsclub:${TAG}").push()
-                        docker.image("sportsclub-docker-local/sportsclub:${TAG}").push('latest')
+                    docker.withRegistry('http://172.27.59.80:8082/', 'artifactory-docker') {
+                        docker.image("abhi_docker/sportsclub:${TAG}").push()
+                        docker.image("abhi_docker/sportsclub:${TAG}").push('latest')
                     }
                 }
             }
-        }*/
-
-        stage('Initialize') {
-            steps {
-                echo "PATH = ${M2_HOME}/bin:${PATH}"
-                echo 'M2_HOME = /opt/maven'
-            }
         }
-
-        stage('test') {
-            steps {
-                echo 'Test'
-                bat 'mvn clean test'
-            }
-        }
-
-        stage('Sonar Analysis') {
-            steps {
-                withSonarQubeEnv('SonarQube') {
-                    bat 'mvn sonar:sonar'
-                }
-            }
-        }
-
-        stage('Compile') {
-            steps {
-                echo 'COMPILE'
-                bat 'mvn clean install'
-            }
-        }
+        // stage('Initialize') {
+        //     steps {
+        //         echo "PATH = ${M2_HOME}/bin:${PATH}"
+        //         echo 'M2_HOME = /opt/maven'
+        //     }
+        // }
 
         /* stage('Deploy') {
             steps {
-               bat 'docker stop sportsclub | true'
+              sh 'docker stop sportsclub | true'
 
-               bat 'docker rm sportsclub | true'
+              sh 'docker rm sportsclub | true'
 
-                bat "docker run --name sportsclub -d -p 8082:8080 http://localhost:8082/artifactory/sportsclub-docker-local/:${TAG}"
+               sh "docker run --name sportsclub -d -p 8082:8080 http://localhost:8082/artifactory/sportsclub-docker-local/:${TAG}"
             }
        }*/
 
-        stage('Upload_Artifact') {
-            steps {
-                script {
-                    def server = Artifactory.server 'artifactory'
-                    def uploadSpec = '''{
-                  "files": [
-                    {
-                      "pattern": "target/*.jar",
-                      "target": "CI_Poc_Abhijeet/"
-                    }
-                 ]
-                }'''
-                    server.upload(uploadSpec)
-                }
-            }
-        }
+        // stage('Upload_Artifact') {
+        //     steps {
+        //         script {
+        //             def server = Artifactory.server 'artifactory'
+        //             def uploadSpec = '''{
+        //           "files": [
+        //             {
+        //               "pattern": "target/*.jar",
+        //               "target": "CI_Poc_Abhijeet/"
+        //             }
+        //          ]
+        //         }'''
+        //             server.upload(uploadSpec)
+        //         }
+       //     }
     }
 }
-
