@@ -13,13 +13,6 @@ pipeline {
     }
 
     stages {
-        //  stage('Docker Build') {
-        //     steps {
-        //         script {
-        //             docker.build("sportsclub-docker-local/sportsclub:${TAG}")
-        //         }
-        //     }
-        // }
 
         stage('validate') {
             steps {
@@ -27,6 +20,7 @@ pipeline {
                 sh 'mvn clean validate'
             }
         }
+
         stage('Compile') {
             steps {
                 echo 'COMPILE'
@@ -88,37 +82,5 @@ pipeline {
                 sh "docker run --network abhijeet-ang-springboot-mysql-net --name sportsclub-abhijeet -p 8085:8080 -d abhi_docker/sportsclub:${TAG}"
             }
         }
-        // stage('Initialize') {
-        //     steps {
-        //         echo "PATH = ${M2_HOME}/bin:${PATH}"
-        //         echo 'M2_HOME = /opt/maven'
-        //     }
-        // }
-
-        /* stage('Deploy') {
-            steps {
-              sh 'docker stop sportsclub | true'
-
-              sh 'docker rm sportsclub | true'
-
-               sh "docker run --name sportsclub -d -p 8082:8080 http://localhost:8082/artifactory/sportsclub-docker-local/:${TAG}"
-            }
-       }*/
-
-        // stage('Upload_Artifact') {
-        //     steps {
-        //         script {
-        //             def server = Artifactory.server 'artifactory'
-        //             def uploadSpec = '''{
-        //           "files": [
-        //             {
-        //               "pattern": "target/*.jar",
-        //               "target": "CI_Poc_Abhijeet/"
-        //             }
-        //          ]
-        //         }'''
-        //             server.upload(uploadSpec)
-        //         }
-       //     }
     }
 }
