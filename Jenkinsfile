@@ -76,7 +76,7 @@ pipeline {
             steps {
                 sh 'docker stop sportsclub-abhijeet | true'
                 sh 'docker rm sportsclub-abhijeet | true'
-                sh "docker run --network  abhijeet-ang-springboot-mysql-net --name sportsclub-abhijeet -p 8085:8080 -d abhi_docker/sportsclub:${TAG}"
+                sh "docker run --network abhijeet-ang-springboot-mysql-net --name sportsclub-abhijeet -p 8085:8080 -d abhi_docker/sportsclub:${TAG}"
             }
         }
         // stage('Initialize') {
