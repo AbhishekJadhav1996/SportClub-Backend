@@ -13,14 +13,7 @@ pipeline {
     }
 
     stages {
-        //  stage('Docker Build') {
-        //     steps {
-        //         script {
-        //             docker.build("sportsclub-docker-local/sportsclub:${TAG}")
-        //         }
-        //     }
-        // }
-
+        
         stage('validate') {
             steps {
                 echo 'VALIDATE'
@@ -55,6 +48,9 @@ pipeline {
             }
         }
         stage('Docker Build') {
+            when {
+                branch 'release'
+            }
             steps {
                 script {
                     docker.build("abhi_docker/sportsclub:${TAG}")
@@ -63,6 +59,9 @@ pipeline {
         }
 
         stage('Pushing Docker Image to Jfrog Artifactory') {
+            when {
+                branch 'release'
+            }
             steps {
                 script {
                     docker.withRegistry('http://172.27.59.80:8082/', 'artifactory-docker') {
@@ -73,43 +72,14 @@ pipeline {
             }
         }
         stage('Deploy'){
+            when {
+                branch 'release'
+            }
             steps {
                 sh 'docker stop sportsclub-abhijeet | true'
                 sh 'docker rm sportsclub-abhijeet | true'
                 sh "docker run --network  abhijeet-ang-springboot-mysql-net --name sportsclub-abhijeet -p 8085:8080 -d abhi_docker/sportsclub:${TAG}"
             }
         }
-        // stage('Initialize') {
-        //     steps {
-        //         echo "PATH = ${M2_HOME}/bin:${PATH}"
-        //         echo 'M2_HOME = /opt/maven'
-        //     }
-        // }
-
-        /* stage('Deploy') {
-            steps {
-              sh 'docker stop sportsclub | true'
-
-              sh 'docker rm sportsclub | true'
-
-               sh "docker run --name sportsclub -d -p 8082:8080 http://localhost:8082/artifactory/sportsclub-docker-local/:${TAG}"
-            }
-       }*/
-
-        // stage('Upload_Artifact') {
-        //     steps {
-        //         script {
-        //             def server = Artifactory.server 'artifactory'
-        //             def uploadSpec = '''{
-        //           "files": [
-        //             {
-        //               "pattern": "target/*.jar",
-        //               "target": "CI_Poc_Abhijeet/"
-        //             }
-        //          ]
-        //         }'''
-        //             server.upload(uploadSpec)
-        //         }
-       //     }
     }
 }
