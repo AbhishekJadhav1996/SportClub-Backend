@@ -56,6 +56,7 @@ pipeline {
         }
         stage('Docker Build') {
             steps {
+                when 'release'
                 script {
                     docker.build("abhi_docker/sportsclub:${TAG}")
                 }
@@ -64,6 +65,7 @@ pipeline {
 
         stage('Pushing Docker Image to Jfrog Artifactory') {
             steps {
+                when 'release'
                 script {
                     docker.withRegistry('http://172.27.59.80:8082/', 'artifactory-docker') {
                         docker.image("abhi_docker/sportsclub:${TAG}").push()
@@ -74,6 +76,7 @@ pipeline {
         }
         stage('Deploy'){
             steps {
+                when 'release'
                 sh 'docker stop sportsclub-abhijeet | true'
                 sh 'docker rm sportsclub-abhijeet | true'
                 sh "docker run --network abhijeet-ang-springboot-mysql-net --name sportsclub-abhijeet -p 8085:8080 -d abhi_docker/sportsclub:${TAG}"
