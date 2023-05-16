@@ -47,6 +47,9 @@ pipeline {
             }
         }
         stage('Docker Build') {
+            when{
+                branch 'release'
+            }
             steps {
                 script {
                     docker.build("abhi_docker/sportsclub:${TAG}")
@@ -55,6 +58,9 @@ pipeline {
         }
 
         stage('Pushing Docker Image to Jfrog Artifactory') {
+            when{
+                branch 'release'
+            }
             steps {
                 script {
                     docker.withRegistry('http://172.27.59.80:8082/', 'artifactory-docker') {
@@ -65,6 +71,9 @@ pipeline {
             }
         }
         stage('Deploy'){
+            when{
+                branch 'release'
+            }
             steps {
                 sh 'docker stop sportsclub-abhijeet | true'
                 sh 'docker rm sportsclub-abhijeet | true'
