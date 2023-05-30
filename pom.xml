@@ -87,7 +87,27 @@
 
 	</dependencies>
 
-	<build>
+	 <build>
+	    <plugins>
+		<plugin>
+		    <groupId>org.mortbay.jetty</groupId>
+		    <artifactId>maven-jetty-plugin</artifactId>
+		    <configuration>
+			<context-param>
+   				 <param-name>contextConfigLocation</param-name>
+   					 <param-value>
+   						 /WEB-INF/spring-hibernate-jetty.xml,
+   						 /WEB-INF/spring-services.xml
+   					 </param-value>
+			</context-param>
+			<scanintervalseconds>3</scanintervalseconds>
+		    </configuration>
+		    <dependencies>
+
+		    </dependencies>
+		</plugin>
+	    </plugins>
+	</build>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
