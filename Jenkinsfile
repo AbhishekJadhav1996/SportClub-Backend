@@ -47,7 +47,7 @@ pipeline {
             }
         }
         stage('Docker Build') {
-            when{
+            when {
                 branch 'release'
             }
             steps {
@@ -58,7 +58,7 @@ pipeline {
         }
 
         stage('Pushing Docker Image to Jfrog Artifactory') {
-            when{
+            when {
                 branch 'release'
             }
             steps {
@@ -71,13 +71,11 @@ pipeline {
             }
         }
         stage('Deploy'){
-            when{
+            when {
                 branch 'release'
             }
             steps {
-                sh 'docker stop sportsclub-abhijeet | true'
-                sh 'docker rm sportsclub-abhijeet | true'
-                sh "docker run --network  abhijeet-ang-springboot-mysql-net --name sportsclub-abhijeet -p 8085:8080 -d abhi_docker/sportsclub:${TAG}"
+                sh 'docker-compose up'
             }
         }
     }
