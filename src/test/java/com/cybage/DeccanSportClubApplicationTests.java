@@ -47,7 +47,7 @@ import com.cybage.services.EnrollmentsServiceImpl;
 import com.cybage.services.PlansServiceImpl;
 
 @RunWith(SpringRunner.class)
-// @SpringBootTest
+@SpringBootTest
 class DeccanSportClubApplicationTests {
 
 	//@Autowired
