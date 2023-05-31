@@ -9,7 +9,7 @@ services:
       MYSQL_DATABASE: club
 
   springboot-container:
-    image: abhijeet-springboot-app
+    image: abhi_docker/sportsclub:latest
     build: .
     ports:
       - 8088:8080
