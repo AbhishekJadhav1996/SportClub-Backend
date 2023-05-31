@@ -38,7 +38,7 @@ import com.cybage.services.SportsServiceImpl;
 import com.cybage.services.UsersServiceImpl;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest
+// @SpringBootTest
 public class ServiceTesting {
 	@InjectMocks
 	private UsersServiceImpl usersserviceimpl;
