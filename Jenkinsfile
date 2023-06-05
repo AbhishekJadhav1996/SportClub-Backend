@@ -36,7 +36,7 @@ pipeline {
         stage('Sonar Analysis') {
             steps {
                 sh 'mvn clean install'
-                sh 'mvn sonar:sonar -Dsonar.token=cbf4cb8304fee53bde54f1d6a2273f35b5afe9fd'
+                sh 'mvn sonar:sonar -Dsonar.token=33967b21d6cd77279517651a8f914e40b880e890'
             }
         }
 
