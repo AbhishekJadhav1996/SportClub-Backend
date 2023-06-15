@@ -20,10 +20,16 @@ services:
     restart: always
     depends_on:
       - mysqldb
+    networks:
+      - abhijeet-ang-springboot-mysql-net
+
   angular-container:
-   image: abhijeet-angular-app
-   ports: 
+    image: abhijeet-angular-app
+    ports: 
       - 8090:80
+    networks:
+      - abhijeet-ang-springboot-mysql-net
+  
 networks:
   abhijeet-ang-springboot-mysql-net:
    driver: bridge
