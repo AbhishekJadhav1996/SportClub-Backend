@@ -13,7 +13,7 @@ services:
       - abhijeet-ang-springboot-mysql-net
 
   springboot-container:
-    image: abhi_docker/sportsclub:latest
+    image: abhijeet-springboot-app
     build: .
     ports:
       - 8088:8080
