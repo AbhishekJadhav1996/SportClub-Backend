@@ -75,7 +75,7 @@ pipeline {
                 branch 'release'
             }
             steps {
-                sh 'docker-compose up'
+                bat 'docker-compose up'
             }
         }
     }
