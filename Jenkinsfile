@@ -9,7 +9,7 @@ pipeline {
     }
     tools {
             maven 'Maven'
-            jdk 'JDK 11'
+            jdk 'JDK11'
     }
 
     stages {
@@ -22,28 +22,28 @@ pipeline {
         stage('Compile') {
             steps {
                 echo 'COMPILE'
-                sh 'mvn clean compile'
+                bat 'mvn clean compile'
             }
         }
 
         stage('test') {
             steps {
                 echo 'Test'
-                sh 'mvn clean test'
+                bat 'mvn clean test'
             }
         }
 
         stage('Sonar Analysis') {
             steps {
-                sh 'mvn clean install'
-                sh 'mvn sonar:sonar -Dsonar.token=cbf4cb8304fee53bde54f1d6a2273f35b5afe9fd'
+                bat 'mvn clean install'
+                bat 'mvn sonar:sonar -Dsonar.token=cbf4cb8304fee53bde54f1d6a2273f35b5afe9fd'
             }
         }
 
         stage('package') {
             steps {
                 echo 'Pakage'
-                sh 'mvn clean package'
+                bat 'mvn clean package'
             }
         }
         stage('Docker Build') {
