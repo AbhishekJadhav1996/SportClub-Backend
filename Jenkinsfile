@@ -33,12 +33,12 @@ pipeline {
             }
         }
 
-        // stage('Sonar Analysis') {
-        //     steps {
-        //         bat 'mvn clean install'
-        //         bat 'mvn sonar:sonar -Dsonar.token=33967b21d6cd77279517651a8f914e40b880e890'
-        //     }
-        // }
+        stage('Sonar Analysis') {
+            steps {
+                bat 'mvn clean install'
+                bat 'mvn sonar:sonar -Dsonar.token=33967b21d6cd77279517651a8f914e40b880e890'
+            }
+        }
 
         stage('package') {
             steps {
