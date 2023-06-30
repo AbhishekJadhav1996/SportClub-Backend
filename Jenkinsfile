@@ -5,45 +5,45 @@ pipeline {
         TAG = "${DATE}.${BUILD_NUMBER}"
     }
     agent {
-        label 'centos_node'
+        label 'Abhijeet'
     }
     tools {
             maven 'Maven'
-            jdk 'JDK 11'
+            jdk 'JDK11'
     }
 
     stages {
         stage('validate') {
             steps {
                 echo 'VALIDATE'
-                sh 'mvn clean validate'
+                bat 'mvn clean validate'
             }
         }
         stage('Compile') {
             steps {
                 echo 'COMPILE'
-                sh 'mvn clean compile'
+                bat 'mvn clean compile'
             }
         }
 
         stage('test') {
             steps {
                 echo 'Test'
-                sh 'mvn clean test'
+                bat 'mvn clean test'
             }
         }
 
         stage('Sonar Analysis') {
             steps {
-                sh 'mvn clean install'
-                sh 'mvn sonar:sonar -Dsonar.token=33967b21d6cd77279517651a8f914e40b880e890'
+                bat 'mvn clean install'
+                bat 'mvn sonar:sonar -Dsonar.token=33967b21d6cd77279517651a8f914e40b880e890'
             }
         }
 
         stage('package') {
             steps {
                 echo 'Pakage'
-                sh 'mvn clean package'
+                bat 'mvn clean package'
             }
         }
         stage('Docker Build') {
@@ -75,8 +75,8 @@ pipeline {
                 branch 'release'
             }
             steps {
-                sh 'docker compose down'
-                sh 'docker compose up -d'
+                bat 'docker compose down'
+                bat 'docker compose up -d'
             }
         }
     }
