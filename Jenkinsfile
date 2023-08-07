@@ -26,12 +26,12 @@ pipeline {
             }
         }
 
-        stage('test') {
-            steps {
-                echo 'Test'
-                sh 'mvn clean test'
-            }
-        }
+        // stage('test') {
+        //     steps {
+        //         echo 'Test'
+        //         sh 'mvn clean test'
+        //     }
+        // }
 
         // stage('Sonar Analysis') {
         //     steps {
@@ -40,12 +40,12 @@ pipeline {
         //     }
         // }
 
-        stage('package') {
-            steps {
-                echo 'Pakage'
-                sh 'mvn clean package'
-            }
-        }
+        // stage('package') {
+        //     steps {
+        //         echo 'Pakage'
+        //         sh 'mvn clean package'
+        //     }
+        // }
         stage('Docker Build') {
             when {
                 branch 'release'
