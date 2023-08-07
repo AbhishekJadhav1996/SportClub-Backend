@@ -5,7 +5,7 @@ pipeline {
     //     TAG = "${DATE}.${BUILD_NUMBER}"
     // }
     agent {
-        label 'centos_node'
+        label 'linux'
     }
     tools {
             maven 'Maven'
