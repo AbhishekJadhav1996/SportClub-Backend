@@ -57,7 +57,9 @@ pipeline {
             }
         }
         stage('scan') {
-            sh 'trivy image abhi_docker/sportsclub:latest'
+            steps { 
+                sh 'trivy image abhi_docker/sportsclub:latest'
+            }
         }
 
         // stage('Pushing Docker Image to Jfrog Artifactory') {
