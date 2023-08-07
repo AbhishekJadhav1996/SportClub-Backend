@@ -9,7 +9,7 @@ pipeline {
     }
     tools {
             maven 'Maven'
-            jdk 'JDK 11'
+            jdk 'JDK11'
     }
 
     stages {
@@ -56,7 +56,7 @@ pipeline {
                 }
             }
         }
-        stag('scan') {
+        stage('scan') {
             sh 'trivy image abhi_docker/sportsclub:latest'
         }
 
