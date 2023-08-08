@@ -52,7 +52,7 @@ pipeline {
             // }
             steps {
                 script {
-                    docker.build("abhi_docker/sportsclub:latest")
+                    sh docker.build("abhi_docker/sportsclub:latest")
                 }
             }
         }
