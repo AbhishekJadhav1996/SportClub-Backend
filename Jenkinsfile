@@ -47,9 +47,9 @@ pipeline {
         //     }
         // }
         stage('Docker Build') {
-            when {
-                branch 'release'
-            }
+            // when {
+            //     branch 'release'
+            // }
             steps {
                 script {
                     docker.build("abhi_docker/sportsclub:latest")
